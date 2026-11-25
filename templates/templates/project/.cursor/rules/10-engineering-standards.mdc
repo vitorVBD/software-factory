@@ -1,0 +1,8 @@
+---
+description: Padrões de engenharia para mudanças neste projeto.
+alwaysApply: true
+---
+
+# Padrões de engenharia
+
+Inspecione o código adjacente antes de criar abstrações. Prefira mudanças pequenas e consistentes com o estilo, tipagem, arquitetura, nomenclatura, tratamento de erros e dependências existentes. Não reescreva módulos sem necessidade. Não introduza dependências nem altere contratos públicos sem justificar e obter aprovação. Preserve compatibilidade e alterações preexistentes no working tree.

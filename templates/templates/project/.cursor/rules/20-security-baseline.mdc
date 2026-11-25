@@ -1,0 +1,8 @@
+---
+description: Baseline de segurança aplicável ao desenvolvimento deste projeto.
+alwaysApply: true
+---
+
+# Baseline de segurança
+
+Valide entradas no servidor; aplique autorização no servidor em cada recurso/operação; use queries parametrizadas/ORM seguro; proteja sessões e tokens; evite segredos em código/logs; minimize dados pessoais; aplique least privilege; trate uploads e URLs como entrada não confiável. Não desative controles de segurança para facilitar testes. Consulte `docs/ai/security-posture.md` para controles particulares.

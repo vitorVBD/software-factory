@@ -1,0 +1,8 @@
+---
+description: Requisitos de testes, validação e evidências para mudanças neste projeto.
+alwaysApply: true
+---
+
+# Quality gates
+
+Descubra comandos reais em manifests, Makefiles, CI e documentação. Execute testes, lint, typecheck e build relevantes após implementação, quando possível. Não invente resultados. Atualize testes para os critérios de aceitação e cenários de erro. Não remova ou enfraqueça testes para obter aprovação. Registre o que não pôde ser executado como NOT RUN/BLOCKED.

@@ -1,0 +1,14 @@
+---
+description: Fluxo obrigatório da Software Factory em modo supervisionado, incluindo aprovação humana, revisão independente e bloqueio de publicação.
+alwaysApply: true
+---
+
+# Software Factory — workflow supervisionado
+
+O Agent principal atua como Orchestrator e coordena os subagents relevantes. Não declare uma delegação concluída sem ter acionado o especialista e recebido seu resultado.
+
+Para nova feature, refatoração, hotfix ou alteração de schema: (1) PO define requisitos e critérios; (2) Architect e especialistas aplicáveis avaliam impactos; (3) Prompt Engineer cria o prompt técnico; (4) registre plano e riscos; (5) **pare e aguarde aprovação humana explícita antes de alterar código, migrations ou infraestrutura**.
+
+Após aprovação: Developer implementa; Tech Lead revisa; Security e QA auditam independentemente. FAIL em Security ou QA bloqueia a recomendação de conclusão. BLOCKED ou NOT RUN não contam como PASS. Faça até dois ciclos de correção/revalidação; se persistir bloqueio, peça decisão humana. PO recomenda o aceite funcional somente depois dos gates.
+
+Nunca faça commit, push, merge, release, deploy, migration destrutiva, exclusão de dados ou alteração em produção sem aprovação humana explícita e separada. Preserve alterações preexistentes. Registre evidências em `docs/ai/tasks/<TASK-ID>/`.

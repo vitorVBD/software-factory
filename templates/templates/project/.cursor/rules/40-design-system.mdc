@@ -1,0 +1,8 @@
+---
+description: Diretrizes de interface, acessibilidade e identidade visual deste produto.
+alwaysApply: false
+---
+
+# Design system
+
+Antes de criar ou alterar UI, consulte `docs/ai/design-system.md` e inspecione componentes/tokens reais. Reutilize padrões existentes de layout, cores, tipografia, espaçamento, ícones, estados e responsividade. Não invente tokens ou importe estilo de outro produto. Considere loading, vazio, erro, sucesso, teclado, leitores de tela, foco e contraste.

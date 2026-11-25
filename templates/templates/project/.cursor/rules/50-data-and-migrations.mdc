@@ -1,0 +1,9 @@
+---
+description: Regras para mudanças em banco, schema, migrations e persistência.
+globs: **/*migration*,**/*schema*,**/*model*,**/*entity*,**/*repository*
+alwaysApply: false
+---
+
+# Dados e migrations
+
+Inspecione schema, ORM e migrations existentes antes de alterar persistência. Preserve integridade, constraints, índices, tenancy e compatibilidade. Documente plano de rollout, backfill e rollback. Não execute operação destrutiva nem migration em ambiente compartilhado/produção sem aprovação humana explícita.

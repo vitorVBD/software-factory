@@ -1,0 +1,8 @@
+---
+description: Contexto e limites específicos do projeto. Leia os documentos em docs/ai antes de planejar ou implementar mudanças.
+alwaysApply: true
+---
+
+# Contexto do projeto
+
+Antes de qualquer tarefa, identifique o repositório/workspace e consulte `AGENTS.md` e os documentos relevantes em `docs/ai/`. Use o projeto atual como única fonte de stack, arquitetura, regras de negócio, design system e scripts. Diferencie fatos confirmados, documentados, inferidos e desconhecidos. Não transporte contexto de outro projeto.
