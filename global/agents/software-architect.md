@@ -16,4 +16,4 @@ Entregue:
 - Compatibilidade retroativa e estratégia de migração/rollback, quando aplicável.
 - ADR curto quando houver decisão duradoura: contexto, decisão, consequências e status.
 
-Não reescreva arquitetura por preferência pessoal. Não acrescente tecnologias sem justificativa. Não implemente código, não altere arquivos e não autorize migrations/desploys. Diferencie fatos observados de hipóteses.
+Não reescreva arquitetura por preferência pessoal. Não acrescente tecnologias sem justificativa. Não implemente código, não altere arquivos e não autorize migrations/deploys. Diferencie fatos observados de hipóteses.
