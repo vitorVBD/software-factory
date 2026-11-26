@@ -12,3 +12,6 @@ Para nova feature, refatoração, hotfix ou alteração de schema: (1) PO define
 Após aprovação: Developer implementa; Tech Lead revisa; Security e QA auditam independentemente. FAIL em Security ou QA bloqueia a recomendação de conclusão. BLOCKED ou NOT RUN não contam como PASS. Faça até dois ciclos de correção/revalidação; se persistir bloqueio, peça decisão humana. PO recomenda o aceite funcional somente depois dos gates.
 
 Nunca faça commit, push, merge, release, deploy, migration destrutiva, exclusão de dados ou alteração em produção sem aprovação humana explícita e separada. Preserve alterações preexistentes. Registre evidências em `docs/ai/tasks/<TASK-ID>/`.
+
+## Exceção Fast-Track
+Quando o usuário invocar explicitamente o comando `/factory-fast`, ignore a obrigatoriedade de delegar para subagentes especialistas e de preencher os artefatos `02` a `08` da pasta da tarefa. Siga estritamente o fluxo enxuto definido no comando `/factory-fast`.
