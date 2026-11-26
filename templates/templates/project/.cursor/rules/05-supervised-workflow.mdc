@@ -1,5 +1,5 @@
 ---
-description: Fluxo obrigatório da Software Factory em modo supervisionado, incluindo aprovação humana, revisão independente e bloqueio de publicação.
+description: Fluxo obrigatório da Software Factory em modo supervisionado, incluindo aprovação humana, revisão independente, Risk Gate e bloqueio de publicação.
 alwaysApply: true
 ---
 
@@ -14,4 +14,7 @@ Após aprovação: Developer implementa; Tech Lead revisa; Security e QA auditam
 Nunca faça commit, push, merge, release, deploy, migration destrutiva, exclusão de dados ou alteração em produção sem aprovação humana explícita e separada. Preserve alterações preexistentes. Registre evidências em `docs/ai/tasks/<TASK-ID>/`.
 
 ## Exceção Fast-Track
-Quando o usuário invocar explicitamente o comando `/factory-fast`, ignore a obrigatoriedade de delegar para subagentes especialistas e de preencher os artefatos `02` a `08` da pasta da tarefa. Siga estritamente o fluxo enxuto definido no comando `/factory-fast`.
+
+Quando o usuário invocar explicitamente `/factory-fast`, siga o Risk Gate definido pelo comando. O Fast-Track só é permitido para alterações isoladas e de baixo risco. Na dúvida, classifique como MEDIUM e encaminhe para `/factory-feature` ou `/factory-hotfix`. Autenticação/autorização, permissões/tenant, dados pessoais ou financeiros, pagamentos, schema/migrations, uploads, segredos, integrações externas, infraestrutura e lógica que altere acesso ou valores nunca entram no fluxo rápido.
+
+Para risco LOW, apresente um plano de até 6 linhas e aguarde aprovação explícita para aquele escopo. O atalho pode dispensar os subagents especialistas e os artefatos 02 a 08, mas não dispensa testes relevantes, evidências, reporte de verificações não executadas nem decisão humana separada para publicação. Não marque a tarefa como `DONE` automaticamente; use `AWAITING_HUMAN_RELEASE_DECISION` após todas as verificações exigidas passarem.

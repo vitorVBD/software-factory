@@ -34,7 +34,7 @@ Pedido
   → PARADA: você decide commit, merge, release ou deploy
 ```
 
-`/factory-fast` é a exceção explícita a esse ciclo. Ela vale quando você invoca o comando: um plano de no máximo 6 linhas, um "ok" seu e implementação direta, sem os subagentes especialistas e sem os artefatos `02` a `08`. Commit, push, merge, release e deploy continuam fora desse atalho. `/factory-triage` só classifica o backlog entre esse atalho e `/factory-feature`; não implementa código.
+`/factory-fast` é a exceção explícita a esse ciclo, mas só deve ser usado para mudanças isoladas e de baixo risco. Antes de implementar, o Agent faz um Risk Gate; na dúvida ou diante de autenticação/autorização, permissões/tenant, dados pessoais ou financeiros, pagamentos, schema/migrations, uploads, segredos, integrações externas ou infraestrutura, deve encaminhar para `/factory-feature` ou `/factory-hotfix`. O Fast-Track exige plano de até 6 linhas e aprovação humana explícita, executa testes relevantes e não substitui revisões independentes quando o risco exigir o fluxo completo. Commit, push, merge, release e deploy continuam fora desse atalho. `/factory-triage` só classifica o backlog entre esse atalho e `/factory-feature`; não implementa código.
 
 Estados de uma tarefa:
 
@@ -208,61 +208,44 @@ powershell -ExecutionPolicy Bypass -File "C:\dev\software-factory\templates\scri
 
 ### Linux e macOS
 
-O scaffold do projeto está em `templates/templates/project` (depois da instalação, em `~/.cursor/factory-templates/templates/project`). O script `templates/scripts/init-project.sh` procura `AGENTS.md`, `.cursor/rules` e `docs/ai` na pasta pai de `scripts/`, que é outro layout. Use a preparação abaixo, que copia o scaffold real e preserva arquivos existentes.
+O script `init-project.sh` usa o mesmo layout de templates e as mesmas opções funcionais do script PowerShell. Ele preserva arquivos existentes por padrão, substitui `{{PROJECT_NAME}}` e `{{PROJECT_SLUG}}` em `.md`, `.mdc` e `.txt` e cria backups `.bak.<timestamp>` quando `--force` é usado.
+
+Após instalar a fábrica:
 
 ```bash
-FACTORY_PROJECT="${HOME}/.cursor/factory-templates/templates/project"
-# A partir do clone, sem instalação global:
-# FACTORY_PROJECT="/caminho/software-factory/templates/templates/project"
-
-PROJECT_PATH="$HOME/projetos/meu-produto"
-PROJECT_NAME="Meu Produto"
-PROJECT_SLUG="$(printf '%s' "$PROJECT_NAME" | tr '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g; s/^-+//; s/-+$//')"
-
-test -d "$PROJECT_PATH" || { echo "A pasta do projeto não existe: $PROJECT_PATH"; exit 1; }
-test -d "$FACTORY_PROJECT" || { echo "Scaffold não encontrado: $FACTORY_PROJECT"; exit 1; }
-
-mkdir -p "$PROJECT_PATH/.cursor/rules" "$PROJECT_PATH/docs/ai/tasks" "$PROJECT_PATH/docs/ai/adr"
-
-copy_tree() {
-  local src="$1" dest="$2"
-  find "$src" -type f | while IFS= read -r file; do
-    local rel="${file#"$src"/}"
-    local target="$dest/$rel"
-    if [ -f "$target" ]; then
-      echo "SKIP (já existe): $target"
-      continue
-    fi
-    mkdir -p "$(dirname "$target")"
-    case "$file" in
-      *.md|*.mdc|*.txt)
-        sed \
-          -e "s/{{PROJECT_NAME}}/${PROJECT_NAME//\//\\/}/g" \
-          -e "s/{{PROJECT_SLUG}}/${PROJECT_SLUG}/g" \
-          "$file" > "$target"
-        ;;
-      *)
-        cp "$file" "$target"
-        ;;
-    esac
-    echo "COPIADO: $target"
-  done
-}
-
-copy_tree "$FACTORY_PROJECT" "$PROJECT_PATH"
-echo "Projeto preparado: $PROJECT_PATH"
+bash "$HOME/.cursor/factory-templates/scripts/init-project.sh" \\
+  --project-path "$HOME/projetos/meu-produto" \\
+  --project-name "Meu Produto"
 ```
 
-Para incluir agentes e skills no repositório do produto:
+Para substituir arquivos existentes, com backup:
 
 ```bash
-copy_tree "${HOME}/.cursor/factory-templates/global/agents" "$PROJECT_PATH/.cursor/agents"
-copy_tree "${HOME}/.cursor/factory-templates/global/skills" "$PROJECT_PATH/.cursor/skills"
+bash "$HOME/.cursor/factory-templates/scripts/init-project.sh" \\
+  --project-path "$HOME/projetos/meu-produto" \\
+  --project-name "Meu Produto" \\
+  --force
 ```
 
-Essas duas pastas existem porque `install.sh` copia `templates/` inteiro, e `templates/global` acompanha agentes e skills. Se você ainda não instalou, troque o prefixo por `<clone>/templates/global`.
+Para versionar também os agentes e as skills no repositório do produto:
 
-No Editor e em self-hosted workers, os agentes globais de `~/.cursor/agents` já são carregados. CLI e Cloud Agents leem agentes em `.cursor/agents` dentro do repositório. Skills globais podem ser sincronizadas em **Settings → Agents → Sync Skills for Cloud Agents**; a cópia em `.cursor/skills` versiona o mesmo conteúdo no projeto.
+```bash
+bash "$HOME/.cursor/factory-templates/scripts/init-project.sh" \\
+  --project-path "$HOME/projetos/meu-produto" \\
+  --project-name "Meu Produto" \\
+  --include-project-agents \\
+  --include-project-skills
+```
+
+Também é possível executar o script diretamente do clone, sem instalação global:
+
+```bash
+bash "/caminho/software-factory/templates/scripts/init-project.sh" \\
+  "/caminho/projetos/meu-produto" \\
+  "Meu Produto"
+```
+
+A pasta do produto precisa existir antes. Sem `--force`, arquivos de destino existentes são mantidos; com `--force`, cada arquivo substituído recebe um backup. O scaffold fica em `templates/templates/project`, e os agentes/skills opcionais vêm de `templates/global/`.
 
 ### O que aparece no produto
 

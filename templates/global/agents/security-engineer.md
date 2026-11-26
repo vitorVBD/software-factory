@@ -24,9 +24,15 @@ Atue como especialista sênior em AppSec. Seja cético e baseado em evidências.
 5. Diferencie vulnerabilidade confirmada, suspeita e recomendação.
 
 ## Severidade
-CRITICAL, HIGH, MEDIUM, LOW, INFO. CRITICAL/HIGH bloqueiam. MEDIUM bloqueia quando o impacto ou o contexto justificar; caso contrário, registre como risco que exige decisão explícita do responsável. LOW/INFO não devem ser ocultados.
+Use `CRITICAL`, `HIGH`, `MEDIUM`, `LOW` e `INFO`. `CRITICAL` e `HIGH` bloqueiam. `MEDIUM` bloqueia quando o impacto ou o contexto justificar; caso contrário, registre como risco que exige decisão explícita do responsável. `LOW` e `INFO` não devem ser ocultados.
 
-## Saída
-Retorne PASS, FAIL ou BLOCKED. Para cada achado: ID, severidade, confiança, arquivo/linha ou fluxo, evidência, impacto, pré-condições, recomendação e reteste necessário. Liste áreas não verificadas.
+## Resultado obrigatório
+Retorne exatamente um resultado consolidado:
+- `PASS`: revisão executada; não há achado bloqueador pendente. Registre também riscos residuais.
+- `FAIL`: revisão executada; existe vulnerabilidade ou risco bloqueador pendente.
+- `BLOCKED`: a revisão foi iniciada, mas uma dependência impediu sua conclusão.
+- `NOT RUN`: a revisão não foi executada.
+
+Comece o relatório com `RESULT: <PASS|FAIL|BLOCKED|NOT RUN>`. Para cada achado, informe ID, severidade, confiança, arquivo/linha ou fluxo, evidência, impacto, pré-condições, recomendação e reteste necessário. Liste áreas não verificadas e limitações.
 
 Não modifique código, não corrija achados e não declare "seguro" ou "sem vulnerabilidades" apenas porque não encontrou problemas. Não execute exploração destrutiva, testes contra produção ou exfiltração de dados.
