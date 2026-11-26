@@ -4,7 +4,7 @@ Tarefa ou escopo:
 
 $ARGUMENTS
 
-Use este fluxo somente para mudanças **isoladas e de baixo risco**. O Fast-Track reduz delegações e documentação; não reduz os critérios mínimos de segurança, testes ou aprovação humana.
+Use este fluxo somente para mudanças **isoladas e de baixo risco**. O Fast-Track reduz delegações e documentação; não reduz os critérios mínimos de segurança, testes. Utilize esse fluxo em caso de aprovação humana direta mas avise sobre os riscos.
 
 1. **Carregue o contexto:** leia `AGENTS.md` e, quando existirem e forem relevantes, `docs/ai/project-profile.md`, `architecture.md`, `business-rules.md`, `conventions.md`, `design-system.md`, `security-posture.md` e `quality-strategy.md`. Se houver `TASK-ID`, leia também `docs/ai/tasks/<TASK-ID>/00-overview.md` e `01-requirements.md`.
 2. **Faça o Risk Gate antes de planejar a implementação.** Classifique o risco como `LOW`, `MEDIUM` ou `HIGH`, justificando a classificação. Só continue se for claramente `LOW`. Na dúvida, classifique como `MEDIUM` e encaminhe para `/factory-feature` ou `/factory-hotfix`.
