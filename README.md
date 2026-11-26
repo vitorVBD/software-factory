@@ -12,7 +12,7 @@ Este repositório é a fábrica. Ele não é um produto de aplicação. Mantenha
 |---|---:|---|
 | Subagentes | 11 | Papéis especializados (produto, arquitetura, implementação, revisão, segurança, QA e outros) |
 | Skills | 8 | Procedimentos reutilizáveis de intake, onboarding, desenvolvimento, auditoria e release |
-| Comandos | 9 | Atalhos `/factory-...` no Agent do Cursor |
+| Comandos | 11 | Atalhos `/factory-...` no Agent do Cursor |
 | Regra global | 1 | Política de orquestração, gates humanos e evidências |
 | Scaffold de projeto | 1 | `AGENTS.md`, regras `.mdc`, contexto em `docs/ai/` e templates de tarefa |
 
@@ -33,6 +33,8 @@ Pedido
   → Product Owner recomenda o aceite
   → PARADA: você decide commit, merge, release ou deploy
 ```
+
+`/factory-fast` é a exceção explícita a esse ciclo. Ela vale quando você invoca o comando: um plano de no máximo 6 linhas, um "ok" seu e implementação direta, sem os subagentes especialistas e sem os artefatos `02` a `08`. Commit, push, merge, release e deploy continuam fora desse atalho. `/factory-triage` só classifica o backlog entre esse atalho e `/factory-feature`; não implementa código.
 
 Estados de uma tarefa:
 
@@ -59,7 +61,7 @@ Gates:
 4. Product Owner recomenda o aceite, com critérios rastreados.
 5. Você autoriza, em separado, merge, release ou deploy.
 
-Silêncio, um “ok” genérico ou a aprovação de outra etapa não autorizam a implementação nem a publicação.
+Silêncio, um “ok” genérico ou a aprovação de outra etapa não autorizam a implementação nem a publicação. A exceção é `/factory-fast`: depois do plano de no máximo 6 linhas, “ok” autoriza só aquele escopo enxuto.
 
 ## Pré-requisitos
 
@@ -367,6 +369,19 @@ Leia o plano. Se algo bloqueante estiver em aberto, a tarefa fica em `NEEDS_CLAR
 Aprovo o plano da TASK-20261125-001. Pode iniciar a implementação.
 ```
 
+### Execução rápida
+
+```text
+/factory-fast
+Ajustar o filtro da listagem de pedidos para o intervalo de datas já usado nas outras telas.
+```
+
+Use quando a mudança for padrão e de baixo risco: CRUD no padrão do projeto, tela ou formulário com componentes existentes, filtro, listagem, ajuste visual, validação simples ou endpoint que repete um padrão já consolidado. O comando lê `docs/ai/conventions.md`, `docs/ai/design-system.md` e, se você informar um `TASK-ID`, os arquivos `00-overview.md` e `01-requirements.md`.
+
+O Agent mostra, em no máximo 6 linhas, quais arquivos de `backend/` e `frontend/` serão criados ou alterados. Um "ok" seu autoriza essa implementação. Ele escreve o código direto, sem delegar aos subagentes especialistas e sem preencher os templates `02` a `08`. Em seguida roda o linter, o typecheck ou o build rápido do que foi afetado, marca `00-overview.md` como `DONE` e resume os arquivos alterados.
+
+Migration complexa, autenticação, permissões, regra financeira, integração externa, webhook, upload sensível e mudança de arquitetura continuam em `/factory-feature`. Commit, push, merge, release e deploy continuam pedindo autorização separada.
+
 ### Implementar o plano aprovado
 
 ```text
@@ -413,7 +428,19 @@ Na raiz do produto, mantenha um `ROADMAP.md`. Depois:
 Login e cadastro já estão no ar. O módulo de pagamentos está pela metade.
 ```
 
-O Product Owner cruza o roadmap, o seu texto e o código (`backend/` e `frontend/` quando existirem). Itens já concluídos e confirmados no código não ganham pasta de tarefa. Itens pendentes ou parciais viram `docs/ai/tasks/TASK-.../` só com `00-overview.md` (status `BACKLOG`) e `01-requirements.md`. O plano técnico (`02` e `03`) fica para o momento em que você puxar a tarefa com `/factory-feature`.
+O Product Owner cruza o roadmap, o seu texto e o código (`backend/` e `frontend/` quando existirem). Itens já concluídos e confirmados no código não ganham pasta de tarefa. Itens pendentes ou parciais viram `docs/ai/tasks/TASK-.../` só com `00-overview.md` (status `BACKLOG`) e `01-requirements.md`. O plano técnico (`02` e `03`) fica para o momento em que você puxar a tarefa. A tabela final inclui a coluna **Modo Recomendado** (`/factory-fast` ou `/factory-feature`), e a mesma recomendação fica registrada em cada `00-overview.md`.
+
+### Triar o backlog
+
+```text
+/factory-triage
+```
+
+O comando lê `00-overview.md` e `01-requirements.md` das tarefas em `docs/ai/tasks/` que ainda não estão `DONE`. Não altera código de aplicação e não chama subagentes. Cada tarefa aberta recebe, no topo de `00-overview.md`, a linha `**Modo Recomendado:**` com `/factory-fast` ou `/factory-feature`.
+
+A resposta é uma tabela com `TASK ID`, título, escopo (Backend, Frontend ou Ambos), modo recomendado e uma frase de justificativa, na ordem de prioridade de execução. No fim, o Agent indica a primeira da fila e deixa o comando pronto para copiar.
+
+`/factory-fast` cabe em CRUD padrão, telas e formulários que seguem componentes existentes, filtros, listagens, ajustes de interface e endpoints que repetem um padrão já consolidado. `/factory-feature` cabe em migration complexa, autenticação, permissões, regras financeiras, integrações, webhooks, upload sensível e mudança de arquitetura.
 
 ### Preparar a estrutura pelo comando
 
@@ -437,7 +464,7 @@ Aprovo o plano da TASK-20261125-001. Pode iniciar a implementação.
 
 Também é aprovação explícita uma frase que cite o ID e autorize a implementação daquele plano, depois de você ter lido o resumo.
 
-Estas respostas não autorizam código:
+Estas respostas não autorizam código no fluxo completo:
 
 ```text
 ok
@@ -445,6 +472,8 @@ pode seguir
 aprovado
 continue
 ```
+
+A exceção é `/factory-fast`. Depois do plano de no máximo 6 linhas, "ok" autoriza a implementação daquele escopo enxuto. Não autoriza commit, push, merge, release nem deploy.
 
 Publicação é outro pedido. “Concluir a tarefa”, “está pronto” ou o aceite do Product Owner não geram commit, push, merge, release nem deploy. Quando quiser isso, diga a ação e o alvo:
 
@@ -552,7 +581,7 @@ software-factory/
 ├── install.sh               # instalação Linux/macOS no perfil do Cursor
 ├── global/
 │   ├── agents/              # 11 subagentes
-│   ├── commands/            # 9 comandos /factory-*
+│   ├── commands/            # 11 comandos /factory-*
 │   ├── skills/              # 8 skills
 │   └── global/GLOBAL-RULE.md
 └── templates/
