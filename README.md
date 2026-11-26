@@ -12,7 +12,7 @@ Este repositório é a fábrica. Ele não é um produto de aplicação. Mantenha
 |---|---:|---|
 | Subagentes | 11 | Papéis especializados (produto, arquitetura, implementação, revisão, segurança, QA e outros) |
 | Skills | 8 | Procedimentos reutilizáveis de intake, onboarding, desenvolvimento, auditoria e release |
-| Comandos | 11 | Atalhos `/factory-...` no Agent do Cursor |
+| Comandos | 12 | Atalhos `/factory-...` no Agent do Cursor |
 | Regra global | 1 | Política de orquestração, gates humanos e evidências |
 | Scaffold de projeto | 1 | `AGENTS.md`, regras `.mdc`, contexto em `docs/ai/` e templates de tarefa |
 
@@ -40,7 +40,7 @@ Estados de uma tarefa:
 
 `DRAFT` → `DISCOVERY` → `PLANNING` → `AWAITING_HUMAN_APPROVAL` → `APPROVED_FOR_IMPLEMENTATION` → `IMPLEMENTING` → `TECH_REVIEW` → `SECURITY_QA` → `REWORK` (0 a 2 ciclos) → `PO_ACCEPTANCE` → `AWAITING_HUMAN_RELEASE_DECISION` → `DONE`
 
-Estados alternativos: `NEEDS_CLARIFICATION`, `BLOCKED`, `REJECTED`, `CANCELLED`. O comando `/factory-roadmap` também usa `BACKLOG` na visão geral da tarefa.
+Estados alternativos: `NEEDS_CLARIFICATION`, `BLOCKED`, `REJECTED`, `CANCELLED`. Os comandos `/factory-roadmap` e `/factory-idea` também usam `BACKLOG` na visão geral da tarefa.
 
 Resultados de verificação:
 
@@ -430,6 +430,19 @@ Login e cadastro já estão no ar. O módulo de pagamentos está pela metade.
 
 O Product Owner cruza o roadmap, o seu texto e o código (`backend/` e `frontend/` quando existirem). Itens já concluídos e confirmados no código não ganham pasta de tarefa. Itens pendentes ou parciais viram `docs/ai/tasks/TASK-.../` só com `00-overview.md` (status `BACKLOG`) e `01-requirements.md`. O plano técnico (`02` e `03`) fica para o momento em que você puxar a tarefa. A tabela final inclui a coluna **Modo Recomendado** (`/factory-fast` ou `/factory-feature`), e a mesma recomendação fica registrada em cada `00-overview.md`.
 
+### Adicionar ideias ao backlog
+
+```text
+/factory-idea
+Quero que o cliente receba um lembrete 24 horas antes da consulta e possa remarcar pelo link do e-mail.
+```
+
+O orquestrador coordena o Product Owner e para antes de código ou plano técnico (`02` e `03`). Se o texto vier vazio, o Agent pergunta quais ideias ou funcionalidades adicionar. A análise lê `ROADMAP.md` (quando existir), `docs/ai/project-profile.md`, `docs/ai/business-rules.md` e os IDs já usados em `docs/ai/tasks/` para continuar a numeração `TASK-YYYYMMDD-###`.
+
+O Product Owner quebra as ideias em tarefas atômicas, evita duplicar o que já está no roadmap ou no backlog, define dependências e classifica o **Modo Recomendado** (`/factory-fast` ou `/factory-feature`). Quando `ROADMAP.md` existir, os itens novos entram na seção apropriada como pendentes `[ ]`. Cada tarefa nasce só com `00-overview.md` (status `BACKLOG`, prioridade, dependências e modo recomendado) e `01-requirements.md` (objetivo, regras de negócio e critérios de aceitação).
+
+A resposta é uma tabela com `TASK ID`, título, escopo, dependências e modo recomendado, mais o comando exato para iniciar alguma delas na hora.
+
 ### Triar o backlog
 
 ```text
@@ -581,7 +594,7 @@ software-factory/
 ├── install.sh               # instalação Linux/macOS no perfil do Cursor
 ├── global/
 │   ├── agents/              # 11 subagentes
-│   ├── commands/            # 11 comandos /factory-*
+│   ├── commands/            # 12 comandos /factory-*
 │   ├── skills/              # 8 skills
 │   └── global/GLOBAL-RULE.md
 └── templates/
