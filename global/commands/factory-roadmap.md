@@ -21,3 +21,4 @@ Atue como Orchestrator coordenando o `product-owner`. Não altere código de apl
    - **Resumo do que foi ignorado (já concluído)** e eventuais divergências encontradas entre o `ROADMAP.md` e o código.
    - **Tabela do Backlog gerado:** `TASK ID`, `Título`, `Escopo (Backend/Frontend)`, `Dependências` e `Prioridade`.
    - Pergunte qual tarefa deseja detalhar tecnicamente primeiro.
+8. Na tabela final do backlog, já inclua a coluna **Modo Recomendado** (`/factory-fast` para CRUDs/telas padrão ou `/factory-feature` para banco, auth, financeiro e arquitetura crítica) e registre essa recomendação em cada `00-overview.md`.
