@@ -3,6 +3,12 @@ description: Diretrizes de interface, acessibilidade e identidade visual deste p
 alwaysApply: false
 ---
 
-# Design system
+# Design system e layout
 
-Antes de criar ou alterar UI, consulte `docs/ai/design-system.md` e inspecione componentes/tokens reais. Reutilize padrões existentes de layout, cores, tipografia, espaçamento, ícones, estados e responsividade. Não invente tokens ou importe estilo de outro produto. Considere loading, vazio, erro, sucesso, teclado, leitores de tela, foco e contraste.
+Antes de criar ou alterar UI, consulte `docs/ai/design-system.md`, inspecione componentes/tokens reais e, quando existirem, leia:
+- `design-system/layouts/docs/04-screen-architecture.md`;
+- `design-system/layouts/docs/05-layout-specification.md`;
+- `design-system/layouts/docs/06-component-decisions.md`;
+- `design-system/layouts/cursor-rule/ui-layout.mdc`.
+
+Reutilize padrões existentes de layout, cores, tipografia, espaçamento, ícones, estados e responsividade. O código atual e os requisitos funcionais prevalecem sobre protótipos ou documentação desatualizada; divergências relevantes devem ser registradas no plano da tarefa. Não invente tokens, módulos ou regras de negócio. Não instale uma biblioteca sem justificativa e aprovação. Considere loading, vazio, erro, sucesso, teclado, leitores de tela, foco, contraste, reduced-motion e adaptação real para mobile.
